@@ -24,7 +24,7 @@
 ---
 
 > [!NOTE]
-> 🎯 **Motivation & Live Demo** — Want to see what this framework can do? Check out this 18-page technical tutorial:
+> 🎯 **Motivation & Live Demo** — Want to see what this framework can do? Check out this technical tutorial:
 > **[Frontend Slides PKU — Technical Tutorial](https://ky230.github.io/Html-slides-public/frontend_slides_intro/index.html)**
 > 
 > **Credits** — This project is forked from [@zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides/tree/main).
