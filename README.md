@@ -24,7 +24,7 @@
 ---
 
 > [!NOTE]
-> 🎯 **Motivation & Live Demo** — 想了解这个框架能做什么？看这份 18 页的技术教程 slides：
+> 🎯 **Motivation & Live Demo** — 想了解这个框架能做什么？看这份技术教程 slides：
 > **[Frontend Slides PKU — Technical Tutorial](https://ky230.github.io/Html-slides-public/frontend_slides_intro/index.html)**
 > 
 > **致谢** — 本项目分叉自 [@zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides/tree/main)。
