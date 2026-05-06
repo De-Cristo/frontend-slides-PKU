@@ -379,7 +379,7 @@ graph TD
 | 2 | 🔥 | `bold` | `#ec5f18` | `#f3ecdb` | 橙色卡片 + 深色渐变 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/bold/index.html) |
 | 3 | 💎 | `cobalt` | `#4361ee` | `#f6f606` | 钴蓝 + 明黄 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cobalt/index.html) |
 | 4 | ⚡ | `voltage` | `#0066ff` | `#d0f804` | 电离蓝 + 荧光黄 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/voltage/index.html) |
-| 5 | 🌿 | `botanical` | `#d4a574` | `#cb2c64` | 暖棕 + 品红 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/botanical/index.html) |
+| 5 | 🌺 | `botanical` | `#d4a574` | `#cb2c64` | 暖棕 + 品红 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/botanical/index.html) |
 | 6 | 🍀 | `jade` | `#2ca657` | `#f6f606` | 翡翠绿 + 明黄 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/jade/index.html) |
 | 7 | 💜 | `lavender` | `#9171a6` | `#f7f706` | 薰衣草紫 + 柠檬黄 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/lavender/index.html) |
 | 8 | 🌐 | `cyber` | `#2dd4bf` | `#f4f81d` | 赛博青 + 霓虹黄 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cyber/index.html) |

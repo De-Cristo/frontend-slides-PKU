@@ -378,7 +378,7 @@ Choose a color skin via the `--skin` parameter. All skins share the same HTML st
 | 2 | 🔥 | `bold` | `#ec5f18` | `#f3ecdb` | Orange cards + dark gradient | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/bold/index.html) |
 | 3 | 💎 | `cobalt` | `#4361ee` | `#f6f606` | Cobalt blue + bright yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cobalt/index.html) |
 | 4 | ⚡ | `voltage` | `#0066ff` | `#d0f804` | Electric blue + neon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/voltage/index.html) |
-| 5 | 🌿 | `botanical` | `#d4a574` | `#cb2c64` | Warm brown + magenta | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/botanical/index.html) |
+| 5 | 🌺 | `botanical` | `#d4a574` | `#cb2c64` | Warm brown + magenta | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/botanical/index.html) |
 | 6 | 🍀 | `jade` | `#2ca657` | `#f6f606` | Jade green + bright yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/jade/index.html) |
 | 7 | 💜 | `lavender` | `#9171a6` | `#f7f706` | Lavender purple + lemon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/lavender/index.html) |
 | 8 | 🌐 | `cyber` | `#2dd4bf` | `#f4f81d` | Cyber teal + neon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cyber/index.html) |

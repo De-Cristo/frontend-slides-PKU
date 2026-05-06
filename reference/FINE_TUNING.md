@@ -1,6 +1,6 @@
 # Fine-Tuning Cheat Sheet
 
-> **核心：调 slide 就是调这 12 个参数**
+> **Core principle: tuning a slide = tuning these 12 parameters**
 
 ---
 
@@ -127,7 +127,7 @@ Use `.highlight-accent` to highlight key terms inside bullet text. Color follows
 </li>
 ```
 
-> **颜色由框架自动管理**: 正文页使用 `--theme-highlight`，扉页由框架自动适配，用户无需额外处理。
+> **Colors are framework-managed**: normal slides use `--theme-highlight`; title slides auto-adapt. No user action needed.
 
 ---
 

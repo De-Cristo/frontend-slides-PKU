@@ -9,7 +9,7 @@
     <style>
         /* ===========================================
            CSS CUSTOM PROPERTIES (Theme: PKU Red-Yellow Classic)
-           北大学术汇报 PPT 风格 - 固定绝对比例 (1920x1080)
+           PKU Academic Presentation — Fixed 1920x1080 Canvas
            =========================================== */
         :root {
             --theme-bg: #fefefc;
@@ -310,7 +310,7 @@
             line-height: 1.5;
         }
 
-        /* Dense 模式：内容密集时用 li style="margin-bottom: 10px;" 覆盖默认 30px */
+        /* Dense mode: override default 30px with li style="margin-bottom: 10px;" for dense content */
         .bullet-list li::marker {
             color: var(--theme-primary);
             font-size: 1.1em;
@@ -450,7 +450,7 @@
             color: #27ae60;
         }
 
-        /* 表格样式 */
+        /* Table styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -521,7 +521,7 @@
             transform: translateY(var(--cap-y));
         }
 
-        /* 图片网格 */
+        /* Figure grid */
         .image-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -927,23 +927,23 @@
 
 <body>
 
-    <!-- ==== 智能等比缩放容器 ==== -->
+    <!-- ==== Smart Scaling Container ==== -->
     <div id="scale-wrapper">
 
-        <!-- 全局挂件：右上角 Logo 组（由 init-slides.py --logos 动态注入） -->
+        <!-- Global widget: top-right Logo group (dynamically injected by init-slides.py --logos) -->
         <div class="global-logos" id="globalLogos">
             <!-- LOGO_PLACEHOLDER -->
         </div>
 
-        <!-- 全局挂件：顶部红条 (仅正文/大纲显示) -->
+        <!-- Global widget: top header bar (visible on normal/outline slides only) -->
         <div class="global-header hidden" id="globalHeader">
             <div class="header-text" id="headerText">Title Placeholder</div>
         </div>
 
-        <!-- 分段式进度条 -->
+        <!-- Segmented progress bar -->
         <div class="progress-container" id="progressContainer"></div>
 
-        <!-- 全局挂件：底部红条 -->
+        <!-- Global widget: bottom footer bar -->
         <div class="global-footer">
             <div class="footer-left">
                 {{TITLE_PLACEHOLDER}}
@@ -956,14 +956,14 @@
             </div>
         </div>
 
-        <!-- ==== 内部纯胶片滚动区 ==== -->
+        <!-- ==== Internal slide scroller ==== -->
         <div class="slides-scroller" id="slidesScroller">
             <!-- END slides-scroller -->
         </div>
     </div> <!-- end scale-wrapper -->
 
     <script>
-        // 1. 智能等比缩放引擎
+        // 1. Smart scaling engine
         function applyScale() {
             const wrapper = document.getElementById('scale-wrapper');
             if (!wrapper) return;
@@ -974,7 +974,7 @@
         }
         window.addEventListener('resize', applyScale);
 
-        // 2. 交互管理器
+        // 2. Interaction manager
         class SlidePresentation {
             constructor() {
                 this.slides = document.querySelectorAll('.slide');
@@ -1074,7 +1074,7 @@
                     <div style="font-size:20px;color:#888;margin-bottom:12px;">Go to Slide</div>
                     <input id="goto-input" type="number" min="1" style="font-size:36px;width:100px;text-align:center;
                         border:2px solid #cc0000;border-radius:8px;padding:8px;outline:none;" />
-                    <div style="font-size:14px;color:#aaa;margin-top:8px;">Enter ↵ 确认 &nbsp; Esc 取消</div>
+                    <div style="font-size:14px;color:#aaa;margin-top:8px;">Enter ↵ Confirm &nbsp; Esc Cancel</div>
                 </div>
             </div>`;
                 overlay.style.display = 'none';
@@ -1154,7 +1154,7 @@
             const container = document.getElementById('progressContainer');
             const slidesArr = Array.from(document.querySelectorAll('.slide'));
             let totalSlides = slidesArr.length;
-            // 寻找文本包含 "Back Up" 的过渡页索引，进度条只画到该页之前
+            // Find transition slide containing "Back Up" — progress bar ends before it
             const backUpIndex = slidesArr.findIndex(s => s.classList.contains('transition-slide') && s.textContent.trim().includes('Back Up'));
             if (backUpIndex !== -1) {
                 totalSlides = backUpIndex;
