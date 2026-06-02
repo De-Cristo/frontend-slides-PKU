@@ -181,7 +181,7 @@ If you prefer editing HTML directly rather than through AI:
 
 4. **Only when the layout fully meets your requirements**, issue the **"bundle/deliver"** command. It embeds all local images as Base64, delivering a fully self-contained single HTML file.
 
-5. 💡 **Presentation shortcuts**: Press **`F`** to toggle fullscreen; press **`G`** to open the go-to dialog — type a page number and press Enter to jump; press **`E`** to toggle live edit mode (text editing + drag/move objects).
+5. 💡 **Presentation shortcuts**: Press **`F`** to toggle fullscreen; press **`G`** to open the go-to dialog — type a page number and press Enter to jump; press **`E`** to toggle live edit mode (text editing + drag/move objects, press **`W`** to download/save the modified HTML).
 
 ---
 

@@ -1197,6 +1197,28 @@
                         setEditMode(!this.isEditMode);
                         e.preventDefault();
                     }
+
+                    if ((e.key === 'w' || e.key === 'W') && this.isEditMode) {
+                        setEditMode(false);
+                        const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+                        const blob = new Blob([html], { type: 'text/html' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        let filename = 'edited_presentation.html';
+                        const path = window.location.pathname;
+                        if (path) {
+                            const file = path.split('/').pop();
+                            if (file && file.endsWith('.html')) filename = file;
+                        }
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        setEditMode(true);
+                        e.preventDefault();
+                    }
                 });
             }
 
