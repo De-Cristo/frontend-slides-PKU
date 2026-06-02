@@ -19,13 +19,20 @@ def bundle_html(input_html_path, output_html_path):
     with open(input_html_path, "r", encoding="utf-8") as f:
         html_content = f.read()
 
-    # Regex to find <img ... src="path">
-    pattern = r'<img\s+[^>]*src=["\']([^"\']+)["\']'
-    matches = re.finditer(pattern, html_content)
+    # Find <img ... src="path">
+    img_pattern = r'<img\s+[^>]*src=["\']([^"\']+)["\']'
+    # Find url('path') or url("path") or url(path) in CSS
+    url_pattern = r'url\([\'"]?([^\'"\)]+)[\'"]?\)'
     
+    # Collect all matches
+    all_paths = set()
+    for match in re.finditer(img_pattern, html_content):
+        all_paths.add(match.group(1))
+    for match in re.finditer(url_pattern, html_content):
+        all_paths.add(match.group(1))
+        
     bundled_count = 0
-    for match in matches:
-        img_src = match.group(1)
+    for img_src in all_paths:
         # Skip images already base64-encoded or external URLs
         if img_src.startswith("data:") or img_src.startswith("http"):
             continue 
@@ -38,9 +45,12 @@ def bundle_html(input_html_path, output_html_path):
         if os.path.exists(full_img_path):
             try:
                 b64_data = get_base64_encoded_image(full_img_path)
-                # Exact string replacement of src
+                # Exact string replacement for both src= and url()
                 html_content = html_content.replace(f'src="{img_src}"', f'src="{b64_data}"')
                 html_content = html_content.replace(f"src='{img_src}'", f"src='{b64_data}'")
+                html_content = html_content.replace(f"url('{img_src}')", f"url('{b64_data}')")
+                html_content = html_content.replace(f'url("{img_src}")', f'url("{b64_data}")')
+                html_content = html_content.replace(f"url({img_src})", f"url('{b64_data}')")
                 print(f"🖼️ Embedded image: {img_src}")
                 bundled_count += 1
             except Exception as e:

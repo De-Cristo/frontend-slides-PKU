@@ -911,6 +911,17 @@
                 opacity: 0;
             }
         }
+
+        body.edit-mode [data-live-edit-drag="true"] {
+            cursor: move;
+        }
+
+        body.edit-mode [data-live-edit-text="true"] {
+            outline: 2px dashed color-mix(in srgb, var(--theme-primary) 40%, transparent);
+            outline-offset: 4px;
+            border-radius: 4px;
+            cursor: text;
+        }
     </style>
     <!-- MathJax 3 for LaTeX rendering -->
     <script>
@@ -984,8 +995,10 @@
                 this.headerText = document.getElementById('headerText');
                 this.pageNum = document.getElementById('pageNumber');
                 this.scroller = document.getElementById('slidesScroller');
+                this.isEditMode = false;
 
                 this.setupIntersectionObserver();
+                this.setupEditMode();
                 this.setupKeyboardNav();
                 this.setupWheelNav();
 
@@ -1062,6 +1075,124 @@
                 this.slides.forEach(slide => observer.observe(slide));
             }
 
+            setupEditMode() {
+                const textSelector = [
+                    '.title-banner h1', '.title-banner h2', '.author-info p', '.transition-text',
+                    '.slide-content h1', '.slide-content h2', '.slide-content h3', '.slide-content h4',
+                    '.slide-content p', '.slide-content li', '.slide-content td', '.slide-content th',
+                    '.slide-content .caption', '.slide-content .highlight-box', '.slide-content .important-box',
+                    '.slide-content .warning-box', '.slide-content .tip-box'
+                ].join(', ');
+                const dragSelector = [
+                    '.title-banner', '.author-info', '.transition-text', '.slide-content > *',
+                    '.left-col > *', '.right-col > *', '.two-col > *', '.dual-layout > *'
+                ].join(', ');
+
+                const textNodes = Array.from(document.querySelectorAll(textSelector));
+                const dragNodes = Array.from(document.querySelectorAll(dragSelector));
+
+                textNodes.forEach((el) => {
+                    el.setAttribute('data-live-edit-text', 'true');
+                });
+
+                dragNodes.forEach((el) => {
+                    el.setAttribute('data-live-edit-drag', 'true');
+                });
+
+                const setEditMode = (enabled) => {
+                    this.isEditMode = enabled;
+                    document.body.classList.toggle('edit-mode', enabled);
+
+                    textNodes.forEach((el) => {
+                        if (enabled) {
+                            el.setAttribute('contenteditable', 'true');
+                            el.setAttribute('spellcheck', 'false');
+                        } else {
+                            el.removeAttribute('contenteditable');
+                            el.removeAttribute('spellcheck');
+                            el.blur();
+                        }
+                    });
+                };
+
+                let dragInfo = null;
+                let dragRafId = null;
+                const flushDrag = () => {
+                    if (!dragInfo || !this.isEditMode) {
+                        dragRafId = null;
+                        return;
+                    }
+                    const dx = dragInfo.latestX - dragInfo.startX;
+                    const dy = dragInfo.latestY - dragInfo.startY;
+                    dragInfo.target.style.left = `${Math.round(dragInfo.baseLeft + dx)}px`;
+                    dragInfo.target.style.top = `${Math.round(dragInfo.baseTop + dy)}px`;
+                    dragRafId = null;
+                };
+                document.addEventListener('mousedown', (e) => {
+                    if (!this.isEditMode || e.button !== 0) return;
+                    const target = e.target.closest('[data-live-edit-drag="true"]');
+                    if (!target) return;
+                    if (e.target.closest('a')) return;
+
+                    const style = window.getComputedStyle(target);
+                    if (style.position === 'static') {
+                        target.style.position = 'relative';
+                    }
+
+                    const currentLeft = parseFloat(target.style.left || '0');
+                    const currentTop = parseFloat(target.style.top || '0');
+                    dragInfo = {
+                        target,
+                        startX: e.clientX,
+                        startY: e.clientY,
+                        latestX: e.clientX,
+                        latestY: e.clientY,
+                        baseLeft: Number.isNaN(currentLeft) ? 0 : currentLeft,
+                        baseTop: Number.isNaN(currentTop) ? 0 : currentTop
+                    };
+
+                    target.style.zIndex = '1200';
+                    target.style.userSelect = 'none';
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!dragInfo || !this.isEditMode) return;
+                    dragInfo.latestX = e.clientX;
+                    dragInfo.latestY = e.clientY;
+                    if (!dragRafId) {
+                        dragRafId = requestAnimationFrame(flushDrag);
+                    }
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if (!dragInfo) return;
+                    if (dragRafId) {
+                        cancelAnimationFrame(dragRafId);
+                        dragRafId = null;
+                    }
+                    dragInfo.target.style.zIndex = '';
+                    dragInfo.target.style.userSelect = '';
+                    dragInfo = null;
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    const activeEl = document.activeElement;
+                    const typingInField = activeEl && (
+                        activeEl.tagName === 'INPUT' ||
+                        activeEl.tagName === 'TEXTAREA' ||
+                        activeEl.isContentEditable
+                    );
+                    if (typingInField) return;
+
+                    if (e.key === 'e' || e.key === 'E') {
+                        setEditMode(!this.isEditMode);
+                        e.preventDefault();
+                    }
+                });
+            }
+
             setupKeyboardNav() {
                 // --- Go-to-slide overlay ---
                 const overlay = document.createElement('div');
@@ -1110,6 +1241,13 @@
                 overlay.addEventListener('click', (e) => { if (e.target === overlay.firstElementChild) hideGoto(); });
 
                 document.addEventListener('keydown', (e) => {
+                    const activeEl = document.activeElement;
+                    const typingInField = activeEl && (
+                        activeEl.tagName === 'INPUT' ||
+                        activeEl.tagName === 'TEXTAREA' ||
+                        activeEl.isContentEditable
+                    );
+                    if (typingInField) return;
                     if (gotoActive) return;
 
                     if (e.key === 'g' || e.key === 'G') {
