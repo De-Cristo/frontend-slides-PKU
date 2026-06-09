@@ -187,10 +187,24 @@ If you prefer editing HTML directly rather than through AI:
 
 ### 📄 Export PDF (Optional)
 
+#### Method 1: Browser "Print to PDF" (Recommended, Vector PDF)
+This is the **simplest and recommended** method to export your slides. It generates a high-quality **vector PDF** where all text is selectable, searchable, and infinitely scalable:
+1. Open your generated `talk_bundle.html` in a web browser (Google Chrome or Microsoft Edge recommended).
+2. Press `Cmd + P` (or `Ctrl + P`) to open the print dialog.
+3. Apply the following settings:
+   - **Destination**: Choose **Save as PDF** (or **Print to PDF**).
+   - **Headers and footers**: **Uncheck** (to hide the default webpage title, date, and URL).
+   - **Background graphics**: **Check** (to preserve background colors, highlight boxes, and event banners).
+4. Click **Save** to export.
+
+#### Method 2: Command Line Playwright Export (Backup, Image PDF)
+Silently render slides using a headless browser script and package them as an image-based PDF:
 ```bash
 bash scripts/export-pdf.sh <input.html> [output.pdf] [options]
 ```
+> ⚠️ **Note:** This method exports the slides as **static screenshots/images** embedded inside the PDF. **Text is not selectable or searchable** in the output PDF. Node.js + npm are required as prerequisites (Playwright will auto-install on its first run).
 
+##### Command Line Options
 | Flag | Default | Description |
 |------|---------|-------------|
 | *(positional 1)* | — | Input HTML path (required) |
@@ -198,17 +212,13 @@ bash scripts/export-pdf.sh <input.html> [output.pdf] [options]
 | `--dpr N` | `3` | Device Pixel Ratio — controls screenshot resolution |
 | `--compact` | off | Use 1280×720 viewport (50-70% smaller files) |
 
-**Resolution × File Size Reference:**
-
+##### Resolution × File Size Reference
 | `--dpr` | Viewport | 18-slide size | Use Case |
 |---------|----------|---------------|----------|
 | `1` | 1920×1080 | ~12MB | Daily sharing (Slack/email) |
 | `2` | 3840×2160 | ~24MB | High-quality print |
 | `3` *(default)* | 5760×3240 | ~48MB | Archive / publication |
 | `1 --compact` | 1280×720 | ~6MB | Quick preview |
-
-> ⚠️ **Prerequisites:** Node.js + npm required (Playwright auto-installs on first run).
-> PDF preserves colors/fonts/layout but **not animations** (static screenshot export).
 
 ---
 

@@ -187,10 +187,24 @@ https://github.com/user-attachments/assets/7acc9292-5fa3-424e-9d57-2e364f658788
 
 ### 📄 导出 PDF (可选)
 
+#### 方法 1：浏览器打印另存为（推荐，生成矢量 PDF）
+这是**最简单、最推荐**的方法，可以生成排版完美、文字可完全选择与复制、放大无损的**矢量 PDF**：
+1. 双击或在浏览器（推荐 Google Chrome 或 Microsoft Edge）中直接打开生成的 `talk_bundle.html`。
+2. 键盘按下 `Cmd + P` (或 `Ctrl + P`) 呼出打印对话框。
+3. 关键设置：
+   - **目标 (Destination)**：选择 **另存为 PDF (Save as PDF)**。
+   - **页眉和页脚 (Headers and footers)**：**取消勾选**（以防打印出网页标题、日期和 URL）。
+   - **背景图形 (Background graphics)**：**必须勾选**（以保留背景色、高亮框与主题条纹）。
+4. 点击 **保存** 即可。
+
+#### 方法 2：命令行 Playwright 导出（备份，生成截图 PDF）
+通过命令行工具在后台静默将幻灯片渲染为静态图片并打包为 PDF：
 ```bash
 bash scripts/export-pdf.sh <input.html> [output.pdf] [options]
 ```
+> ⚠️ **注意：** 此方法将幻灯片作为**静态图片截图**导出并打包，导出的 PDF 中的**文字无法选择与复制**。同时需要前置依赖 Node.js + npm（Playwright 首次运行时会自动下载安装）。
 
+##### 命令行参数表
 | Flag | Default | Description |
 |------|---------|-------------|
 | *(位置参数 1)* | — | 输入 HTML 路径（必填） |
@@ -198,17 +212,13 @@ bash scripts/export-pdf.sh <input.html> [output.pdf] [options]
 | `--dpr N` | `3` | Device Pixel Ratio — 控制截图分辨率 |
 | `--compact` | off | 使用 1280×720 视口（文件缩小 50-70%） |
 
-**分辨率 × 文件大小参考：**
-
+##### 分辨率 × 文件大小参考
 | `--dpr` | 视口 | 18 页大小 | 用途 |
 |---------|------|-----------|------|
 | `1` | 1920×1080 | ~12MB | 日常分享 (Slack/邮件) |
 | `2` | 3840×2160 | ~24MB | 高质量打印 |
 | `3` *(默认)* | 5760×3240 | ~48MB | 存档 / 出版 |
 | `1 --compact` | 1280×720 | ~6MB | 快速预览 |
-
-> ⚠️ **前置依赖：** 需要 Node.js + npm（Playwright 首次运行时自动安装）。
-> PDF 保留颜色/字体/排版，但**不保留动画**（静态截图导出）。
 
 ---
 

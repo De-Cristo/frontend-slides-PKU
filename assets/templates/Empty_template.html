@@ -922,6 +922,136 @@
             border-radius: 4px;
             cursor: text;
         }
+
+        /* ===========================================
+           PRINT MEDIA STYLES (Vector PDF Generation)
+           =========================================== */
+        @media print {
+            @page {
+                size: 1920px 1080px;
+                margin: 0;
+            }
+            html, body {
+                width: 1920px !important;
+                height: 1080px !important;
+                overflow: visible !important;
+                background: transparent !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            #scale-wrapper {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 1920px !important;
+                height: 1080px !important;
+                transform: none !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+            }
+            .slides-scroller {
+                position: static !important;
+                overflow: visible !important;
+                height: auto !important;
+                width: 100% !important;
+            }
+            .slide {
+                display: flex !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                position: relative !important;
+                width: 1920px !important;
+                height: 1080px !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background-image: none !important;
+            }
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                visibility: visible !important;
+                transition: none !important;
+            }
+            
+            body > .global-header,
+            body > .global-footer,
+            body > .global-logos,
+            #scale-wrapper > .global-header,
+            #scale-wrapper > .global-footer,
+            #scale-wrapper > .global-logos,
+            #globalHeader,
+            #globalFooter,
+            #globalLogos {
+                display: none !important;
+            }
+            
+            .local-print-header {
+                display: flex !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 1920px !important;
+                height: var(--header-height) !important;
+                z-index: 1000 !important;
+            }
+            
+            .local-print-logos {
+                display: flex !important;
+                position: absolute !important;
+                top: 12px !important;
+                right: 0 !important;
+                height: calc(var(--header-height) - 4px) !important;
+                z-index: 1001 !important;
+            }
+            
+            .local-print-footer {
+                display: flex !important;
+                position: absolute !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 1920px !important;
+                height: var(--footer-height) !important;
+                z-index: 1000 !important;
+            }
+
+            .highlight-box,
+            .important-box,
+            .warning-box,
+            .tip-box {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                box-shadow: none !important;
+            }
+
+            .slide[data-header="hidden"] .local-print-header {
+                display: none !important;
+            }
+            
+            .transition-slide .local-print-header,
+            .transition-slide .local-print-logos,
+            .transition-slide .local-print-footer {
+                display: none !important;
+            }
+            
+            mjx-container svg path {
+                stroke: none !important;
+                stroke-width: 0 !important;
+            }
+            mjx-container {
+                font-weight: normal !important;
+            }
+        }
+
+        @media screen {
+            .local-print-header,
+            .local-print-footer,
+            .local-print-logos {
+                display: none !important;
+            }
+        }
     </style>
     <!-- MathJax 3 for LaTeX rendering -->
     <script>
@@ -1317,6 +1447,56 @@
                 });
             }
         }
+        // 0. PDF Vector Print Adapter (Self-executing to ensure execution before DOM printing)
+        (() => {
+            const slides = document.querySelectorAll('.slide');
+            const globalHeader = document.querySelector('.global-header');
+            const globalFooter = document.querySelector('.global-footer');
+            const globalLogos = document.querySelector('.global-logos');
+            
+            if (!globalHeader || !globalFooter) {
+                return;
+            }
+            const totalSlides = slides.length;
+            
+            slides.forEach((slide, index) => {
+                // 1. Clone Header
+                const localHeader = globalHeader.cloneNode(true);
+                localHeader.removeAttribute('id');
+                localHeader.classList.remove('hidden');
+                localHeader.classList.add('local-print-header');
+                
+                const slideTitle = slide.getAttribute('data-title') || "";
+                const headerTextNode = localHeader.querySelector('.header-text') || localHeader.querySelector('#headerText');
+                if (headerTextNode) {
+                    headerTextNode.innerText = slideTitle;
+                    headerTextNode.removeAttribute('id');
+                }
+                slide.appendChild(localHeader);
+                
+                // 2. Clone Logos
+                if (globalLogos) {
+                    const localLogos = globalLogos.cloneNode(true);
+                    localLogos.removeAttribute('id');
+                    localLogos.classList.add('local-print-logos');
+                    slide.appendChild(localLogos);
+                }
+                
+                // 3. Clone Footer
+                const localFooter = globalFooter.cloneNode(true);
+                localFooter.removeAttribute('id');
+                localFooter.classList.add('local-print-footer');
+                
+                if (!slide.classList.contains('title-slide') && !slide.classList.contains('transition-slide')) {
+                    const footerRight = localFooter.querySelector('.footer-right') || localFooter.querySelector('#pageNumber')?.parentElement;
+                    if (footerRight) {
+                        footerRight.innerHTML = `<span>${index + 1} / ${totalSlides}</span>`;
+                    }
+                }
+                slide.appendChild(localFooter);
+            });
+        })();
+
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('progressContainer');
             const slidesArr = Array.from(document.querySelectorAll('.slide'));
