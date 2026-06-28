@@ -2,14 +2,13 @@
 /* Google Fonts: none */
 
 :root {
-    --theme-bg: #fefefc;
-    --theme-primary: #cc0000;
-    --theme-accent: #ffff00;
+    --theme-bg: #FFFFFF;
+    --theme-primary: #156082;
+    --theme-accent: #cc0000;
     --theme-highlight: #cc0000;
-    --theme-progress: #d4a800;
-    --theme-text: #1a1a1a;
-    --font-body: 'Times New Roman', Times, serif;
-    --font-comic: 'Comic Sans MS', 'Comic Sans', cursive;
+    --theme-progress: #0F9ED5;
+    --theme-text: #000000;
+    --font-body: 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
 }
 
 /* Terminal overrides for light background (Atom One Light palette) */
