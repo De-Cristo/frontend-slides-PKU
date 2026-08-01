@@ -9,6 +9,10 @@
     --theme-progress: #0F9ED5;
     --theme-text: #000000;
     --font-body: 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+
+    /* UMD readability profile for 1920x1080 academic slides. */
+    --body-size: 42px;
+    --umd-caption-size: 22px;
 }
 
 /* Terminal overrides for light background (Atom One Light palette) */
@@ -33,3 +37,69 @@
 .term-tag      { color: #e45649; }
 .term-attr     { color: #986801; }
 .term-cursor   { color: #383a42; }
+
+/*
+ * Readability and footer-safe figure defaults.
+ * Keep these in the UMD skin so generated decks do not need copied overrides.
+ */
+.slide-content {
+    font-size: var(--body-size);
+    overflow: hidden;
+    padding-bottom: 36px;
+}
+
+.slide-content .bullet-list li {
+    margin-bottom: 18px !important;
+    line-height: 1.28 !important;
+}
+
+.slide-content .bullet-list li ul li {
+    margin-bottom: 10px !important;
+    line-height: 1.22 !important;
+}
+
+.slide-content .highlight-box,
+.slide-content .important-box,
+.slide-content .warning-box,
+.slide-content .tip-box {
+    line-height: 1.28 !important;
+}
+
+.slide-content .tab .caption,
+.slide-content .fig .caption,
+.slide-content .figure-frame .caption {
+    font-size: var(--umd-caption-size) !important;
+}
+
+.slide-content .fig {
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* Image caps preserve readable plots while leaving room for annotations. */
+.slide-content .fig-1 .figure-frame img {
+    max-height: 50vh !important;
+}
+
+.slide-content .fig-1x2 .figure-frame img {
+    max-height: 38vh !important;
+}
+
+.slide-content .fig-1x3 .figure-frame img {
+    max-height: 35vh !important;
+}
+
+.slide-content .fig-2x2 .figure-frame img {
+    max-height: 29vh !important;
+}
+
+.slide-content .fig-2x3 .figure-frame img {
+    max-height: 21vh !important;
+}
+
+/* Opt in when text and figures share a slide and the figure must not collapse. */
+.slide-content .fig-fixed {
+    flex: 0 0 var(--figure-row-height, 42vh);
+    height: var(--figure-row-height, 42vh);
+    min-height: var(--figure-row-height, 42vh);
+}

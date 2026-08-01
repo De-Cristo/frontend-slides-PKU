@@ -394,6 +394,10 @@ Choose a color skin via the `--skin` parameter. All skins share the same HTML st
 | 8 | 🌐 | `cyber` | `#2dd4bf` | `#f4f81d` | Cyber teal + neon yellow | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cyber/index.html) |
 | 9 | 💻 | `terminal` | `#39d353` | `#39d353` | Hacker terminal green | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/terminal/index.html) |
 
+### UMD Readability Profile
+
+The `umd` skin also applies the shared 1920x1080 readability and figure-boundary defaults: 42px body text, 22px captions, footer-safe content padding, and capped image heights for each figure-grid layout. Use `.fig-fixed` on mixed text/figure slides when the plot row must retain a guaranteed height. See [`reference/UMD_READABILITY.md`](reference/UMD_READABILITY.md).
+
 ---
 
 ## 🔨 DIY — Customize Your Own Colors

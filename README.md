@@ -395,6 +395,10 @@ graph TD
 | 8 | 🌐 | `cyber` | `#2dd4bf` | `#f4f81d` | 赛博青 + 霓虹黄 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/cyber/index.html) |
 | 9 | 💻 | `terminal` | `#39d353` | `#39d353` | 黑客终端绿 | [Preview](https://ky230.github.io/Html-slides-public/Hfrontend-slides-PKU-skin/terminal/index.html) |
 
+### UMD 可读性配置
+
+`umd` 皮肤同时提供统一的 1920x1080 可读性与图像边界默认值：42px 正文、22px 图注、页脚安全留白，以及针对不同 figure grid 的图像高度上限。在文字和图像混排页面中，如果图像行必须保持固定高度，请使用 `.fig-fixed`。详见 [`reference/UMD_READABILITY.md`](reference/UMD_READABILITY.md)。
+
 ---
 
 ## 🔨 DIY — 自定义你的配色
