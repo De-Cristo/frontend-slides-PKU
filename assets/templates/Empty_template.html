@@ -285,7 +285,14 @@
             font-size: 64px;
             font-weight: bold;
             color: var(--theme-text);
-            padding-left: 60px;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 1920px;
+            padding-left: 180px;
+            padding-right: 180px;
+            line-height: 1.25;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .slide-content {
@@ -1933,6 +1940,27 @@
             }
             if (img.complete && img.naturalWidth) applyRadius();
             else img.onload = applyRadius;
+        });
+    })();
+    </script>
+
+    <!-- Transition title collision guard (HARNESS: idea18) -->
+    <script>
+    (function() {
+        document.querySelectorAll('.transition-slide').forEach(function(slide) {
+            var textEl = slide.querySelector('.transition-text');
+            if (!textEl) return;
+            textEl.style.boxSizing = 'border-box';
+            textEl.style.width = '100%';
+            var cs = window.getComputedStyle(textEl);
+            var pl = parseInt(cs.paddingLeft, 10) || 0;
+            if (pl < 180) {
+                textEl.style.paddingLeft = '180px';
+            }
+            var pr = parseInt(cs.paddingRight, 10) || 0;
+            if (pr < 180) {
+                textEl.style.paddingRight = '180px';
+            }
         });
     })();
     </script>
